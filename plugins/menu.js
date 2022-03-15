@@ -5,43 +5,59 @@ let path = require('path')
 let fetch = require('node-fetch')
 let moment = require('moment-timezone')
 let tags = {
-    'main': 'Utama',
-    'game': 'Game',
-    'xp': 'Exp & Limit',
-    'nsfw': `NSFW ${global.opts['nsfw'] ? '' : '(Dinonaktifkan)'}`,
-    'sticker': 'Stiker',
-    'edukasi': 'Edukasi',
-    'news': 'News',
-    'kerang': 'Kerang Ajaib',
-    'quotes': 'Quotes',
-    'admin': `Admin ${global.opts['restrict'] ? '' : '(Dinonaktifkan)'}`,
-    'rpg': 'Epic Rpg',
-    'group': 'Grup',
-    'anime': 'Anime',
-    'premium': 'Premium',
-    'internet': 'Internet',
-    'image': 'Random Image',
-    'anonymous': 'Anonymous Chat',
-    'nulis': 'MagerNulis & Logo',
-    'downloader': 'Downloader',
-    'tools': 'Tools',
-    'fun': 'Fun',
-    'database': 'Database',
-    'vote': 'Voting',
-    'absen': 'Absen',
-    'quran': 'Islam',
-    'audio': 'Pengubah Suara',
-    'jadibot': 'Jadi Bot',
-    'info': 'Info',
-    '': 'Tanpa Kategori',
+      'main': 'Main',
+      'info': 'INGFO',
+      'rpg': 'RPG',
+      'game': 'GAME MENU',
+      'xp': 'EXP & LIMIT',
+      'database': 'DATABASE MENU',
+      'sticker': 'STICKER MENU',
+      'maker': 'MAKER MENU',
+      'spammer': 'SPAM MENU',
+      'audio': 'AUDIO MENU',
+      'kerang': 'KERANG AJAIB',
+      'cek': 'CEK MENU',
+      'fun': 'FUN MENU',
+      'quotes': 'QUOTES MENU',
+      'islamic': 'ISLAM MENU',
+      'anonymous': 'ANONYMOUS CHAT',
+      'admin': 'ADMIN MENU',
+      'group': 'GROUP MENU',
+      'internet': 'INTERNET',
+      'foto': 'IMAGE MENU',
+      'nime': 'ANIME MENU',
+      'nulis': 'MAGER NULIS',
+      'downloader': 'DOWNLOADER MENU',
+      'tools': 'TOOLS MENU',
+      'owner': 'OWNER MENU',
+      'jadibot': 'JADI BOT',
+      'host': 'HOST',
+      'advanced': 'EVAL',
+      '': 'NO CATEGORY',
   }
 
 const defaultMenu = {
   before: `
-*Halo Kak  ${name}, ${ucapan()}*
+Hi Kak ${name}, ${ucapan()}
+╭─❏ *Info*
+├▸ *Name:* %name
+├▸ *Premium:* 404
+├▸ *Limit:* %limit
+├▸ *Role:* %role
+├▸ *Xp:* %exp / %maxexp
+├▸ *Total Xp:* %totalexp
+├▸ Tanggal: *%week %weton, %date*
+├▸ Tanggal Islam: *%dateIslamic*
+├▸ Waktu: *%time*
+├▸ *Name:* %me
+├▸ *Mode:* ${global.opts['self'] ? 'Private' : 'Publik'}
+├▸ *Battery:* ${conn.battery != undefined ? `${conn.battery.value}% ${conn.battery.live ? '🔌 pengisian' : ''}` : 'tidak diketahui'}
+├▸ *Uptime:* %uptime (%muptime)
+├▸ *Database:* %rtotalreg dari %totalreg
+╰❏
 %readmore`.trimStart(),
   header: '╭─〔 %category 〕',
-  body: '┆• %cmd %islimit %isPremium',
+  body: '┆∘ %cmd %islimit %isPremium',
   footer: '╰───\n',
   after: `
 *%npmname@^%version*
@@ -149,8 +165,8 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       readmore: readMore
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-    await conn.sendButtonImg(m.chat, await (await fetch(image)).buffer(), `*「 ᴍɪᴋᴜ-ʙᴏᴛ 」*`
-, text.trim(), '👑 Owner Bot 👑', '.owner', m)
+    await conn.send3ButtonImg(m.chat, await (await fetch(image)).buffer(), ``
+, text.trim(), 'Owner Bot', `,owner`, 'Rules', '.rules', 'Donasi', '.donasi', m)
   } catch (e) {
     conn.reply(m.chat, 'Maaf, menu sedang error', m)
     throw e
