@@ -5,7 +5,7 @@ let path = require('path')
 let fetch = require('node-fetch')
 let moment = require('moment-timezone')
 let tags = {
-'main': 'Utama',
+    'main': 'Utama',
     'game': 'Game',
     'xp': 'Exp & Limit',
     'nsfw': `NSFW ${global.opts['nsfw'] ? '' : '(Dinonaktifkan)'}`,
@@ -150,7 +150,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
     await conn.sendButtonImg(m.chat, await (await fetch(image)).buffer(), `*「 ᴍɪᴋᴜ-ʙᴏᴛ 」*`
-, text.trim(), '*👑 Owner Bot 👑*', `,owner`, m)
+, text.trim(), '👑 Owner Bot 👑', '.owner', m)
   } catch (e) {
     conn.reply(m.chat, 'Maaf, menu sedang error', m)
     throw e
